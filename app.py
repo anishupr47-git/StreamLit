@@ -434,7 +434,7 @@ class HardwareTelemetryEngine:
     """Manages Virutal Hardware Specifications, memory consumption logs and SMI generation."""
 
     @staticmethod
-    def generate_nvidia_smi(gpu_type: str, speed: int = 42)-> str:
+    def generate_nvidia_smi(gpu_type: str, seed: int = 42)-> str:
         """Generates a highly realistic, dyanmaic ASCII nvidia-smi command terminal output."""
         random.seed(seed)
 
@@ -814,7 +814,7 @@ class HyperparameterSweeper:
             "Weight Decay": weight_decay,
             "IoU Threshold": iou_threshold,
             "mAP50": round(final_mAP50, 4),
-            "mAP50-95": round(final_loss, 4),
+            "Final Loss": round(final_loss, 4),
             "Status": "COMPLETED" if final_loss < 2.0 else "DIVERGED"
         }
     
