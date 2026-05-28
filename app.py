@@ -1549,14 +1549,14 @@ class NeuralLayerOptimizerSimulator:
         weights: np.ndarray,
         gradients: np.ndarray,
         velocity: np.ndarray,
-        learning_rates: float = 0.01,
+        learning_rate: float = 0.01,
         momentum: float = 0.9,
         weight_decay: float = 0.0001
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Calculates SGD-with-Momentum step update over active weight tensors"""
-        weight_decayed = weights * (1.0 - learning_rates * weight_decay)
+        weight_decayed = weights * (1.0 - learning_rate * weight_decay)
         new_velocity = momentum * velocity + gradients
-        new_weights = weight_decayed - learning_rates * new_velocity
+        new_weights = weight_decayed - learning_rate * new_velocity
 
         return new_weights, new_velocity
     
