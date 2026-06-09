@@ -24,3 +24,10 @@ It's Basically an entire AI training workspace simulation packed into a single, 
 
  # FINALLY
  If someone wants to know how does a core AI system works this is for them. It is an entire AI training workspace which is encapsuled into one single dashboard. Also it also shows how every process is being worked out when someone is developing something from AI. Who enjoys mathematics will also have a good time using this webapp.
+
+ # PHOTOS
+ <img width="2560" height="1440" alt="Screenshot (248)" src="https://github.com/user-attachments/assets/a4848c83-d185-4138-9277-99625a3e9c38" /><img width="2560" height="1440" alt="Screenshot (247)" src="https://github.com/user-attachments/assets/936cedd8-ffce-40a6-ad0d-3710dc1e7657" /><img width="2560" height="1440" alt="Screenshot (246)" src="https://github.com/user-attachments/assets/5148399d-9ef8-497a-b4bf-1034ca30276c" />
+<img width="2560" height="1440" alt="Screenshot (249)" src="https://github.com/user-attachments/assets/9c58d700-adad-4f0e-a71a-68f4cb5acb1f" /><img width="2560" height="1440" alt="Screenshot (251)" src="https://github.com/user-attachments/assets/ded0d76b-61ac-4347-886c-86ad951f68fe" />
+<img width="2560" height="1440" alt="Screenshot (250)" src="https://github.com/user-attachments/assets/7f8d1e55-8a17-456b-9cbb-17d53d5c0669" />
+<img width="2560" height="1440" alt="Screenshot (246)" src="https://github.com/user-attachments/assets/28a01407-bbdb-4a34-81bf-5d525505cc54" />
+
