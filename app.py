@@ -17,7 +17,7 @@ import pandas as pd
 if "stage" not in st.session_state:
     st.session_state["stage"]=0
 
-#Handle pandas, numpy, matplotlibe, yaml imports with graceful fallback alerts
+#import models
 try:
     import pandas as pd
 except ImportError:
@@ -51,7 +51,7 @@ except ImportError:
     st.error("PyYAML is not installed. Run `pip install pyyaml` in your environment")
     yaml = None
 
-# SECTION 1: CORE CONSTANT & DEFAULT HARDWARE/DATASET PROFILES
+#dataset for training
 
 class LabConfigs:
     """Core configuration and hardware options for the AI Workspace Dashboard"""
@@ -179,10 +179,10 @@ class LabConfigs:
         }
     }
     
-# SECTION 2: STYLING USING VANILLA CSS
+# style using vanilla
 
 class StyleSystem:
-    """Container moduler vanilla CSS blocks that override default Streamlit Layout blocks"""
+  
 
     @staticmethod
     def get_custom_css() -> str:
@@ -315,7 +315,7 @@ class StyleSystem:
             margin-bottom: 16px;
         }
 
-        /* Interactive Buttons overrides */
+        
         .stButton>button {
             background: linear-gradient(135deg, #1f2937, #111827) !important;
             color: #e5e7eb !important;
@@ -342,7 +342,7 @@ class StyleSystem:
             transform: translateY(0px);
         }
 
-        /* Custom Console Output Frame */
+       
         .console-frame {
             background-color: #05070a;
             border-radius: 10px;
@@ -358,7 +358,6 @@ class StyleSystem:
             max-height: 380px;
         }
 
-        /*Metric Blocks Override */
         div[data-testid="stMetricValues"]{
             font-family: 'Outfit',sans-serif;
             font-size: 1.85rem !important;
@@ -381,7 +380,7 @@ class StyleSystem:
             font-weight: 500 !important;
         }
 
-        /* Input Elements Overrides */
+       
         div[data-baseweb="input"]{
             background-color: #111420 !important;
             border-radius: 8px !important;
@@ -407,7 +406,7 @@ class StyleSystem:
             100% { border-color: rgba(245,158,11,0.4); box-shadow: 0 0 10px rgba(245,158,11,0.15);}
         }
 
-        /*Scrollbar aesthetics */
+       
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -428,7 +427,7 @@ class StyleSystem:
         </style>
 
             """
-# SECTION 3: System Telemetry & CUDA smi Engine
+
 
 class HardwareTelemetryEngine:
     """Manages Virutal Hardware Specifications, memory consumption logs and SMI generation."""
@@ -438,11 +437,11 @@ class HardwareTelemetryEngine:
         """Generates a highly realistic, dyanmaic ASCII nvidia-smi command terminal output."""
         random.seed(seed)
 
-        #Pull specifications based on selete profile
+      
         spec= LabConfigs.GPU_PROFILES.get(gpu_type, LabConfigs.GPU_PROFILES["NVIDIA A100 SXM4 80GB"])
         vram_total = spec["vram_gb"]
 
-        #CALCULATE DYNAMIC LOADS
+     
         
         gpu_util = random.randint(35,95)
         fan_speed= random.randint(45,82)
@@ -507,7 +506,7 @@ class HardwareTelemetryEngine:
             "Simulated Peak Precision Performance": f"{spec['simulated_tflops']} TFLOPS (FP16)"
         }
     
-    #SECTION 4 VIRTUAL STORAGE ARCHITECTURE
+    #vsa
 
 class VirtualFilesystem:
     """Simulates directory configurations, directory mounting logs, and custom files lists."""
@@ -566,7 +565,7 @@ class VirtualFilesystem:
                     file_icon= ""
                 html_out += f"{indent}{file_icon} <b>{key}</b> <span style='color: #6b7280; font-size: 0.75rem;'>({value['size']})</span><br>"
             else:
-                #Node elements (Directory)
+              
                 html_out += f"{indent} <span style='color: #38bdf8; font-weight: bold;'>{key}/</span><br>"
                 html_out += self.render_tree_html(value,depth + 1)
         return html_out
@@ -577,7 +576,7 @@ class VirtualFilesystem:
         parts = target_folder.strip("/").split("/")
         curr = st.session_state.filesystem
 
-        #Navigate nested path mappins safely
+       
         for p in parts:
             if not p:
                 continue
@@ -588,14 +587,14 @@ class VirtualFilesystem:
         curr[name]={"size":size_str, "type":file_type, "content": content}
 
 
-#SECTION 5: DATASET INSPECTION AND YAML STRUCTURAL VALIDATOR
+
 
 class DatasetValidator:
     """Validates structural contents of YAML config structures and analyzes dataset distributions."""
     
     @staticmethod
     def parse_yaml_content(yaml_str: str) -> Tuple[bool, Optional[Dict[str, Any]], str]:
-        """Validates configuration parameters of YOLO configs string syntax."""
+       
         if not yaml:
             return False, None, "PyYAML module is missing. Re-install in host environment."
         
@@ -604,7 +603,7 @@ class DatasetValidator:
             if not isinstance(parsed, dict):
                 return False, None, "Invalid file format. Contents must load into dictionary properties."
             
-            # Look for YOLO structural directories
+            
             required_keys = ["train", "val", "names"]
             missing = [k for k in required_keys if k not in parsed]
             if missing:
@@ -625,7 +624,7 @@ class DatasetValidator:
         val_count = int(total_images * 0.20)
         test_count = total_images - (train_count + val_count)
         
-        # Generate class frequency spreads using simple power laws
+        
         freq_weights = [1.0 / (i + 1) for i in range(num_classes)]
         sum_weights = sum(freq_weights)
         norm_weights = [w / sum_weights for w in freq_weights]
@@ -648,10 +647,10 @@ class DatasetValidator:
             "Mapped Annotations Logs": class_spreads,
             "Missing Annotation Labels Warnings": unlabeled,
             "Corrupt Image Index Files": corruptions,
-            "Quality Status": "🟢 COMPLIANT" if (corruptions == 0 and unlabeled < 5) else "DEGRADED STAGING"
+            "Quality Status": " COMPLIANT" if (corruptions == 0 and unlabeled < 5) else "DEGRADED STAGING"
         }
     
-#SECTION 6: CONVERGENCE MATHEMATICAL STOCHASTIC SIMULATOR
+
 
 class DeepLearningPhysicsSimulator:
     """Physics-grade math generators for neural models convergence, loss decays, and scheduling"""
@@ -665,7 +664,7 @@ class DeepLearningPhysicsSimulator:
         warmup_epochs: int =5
     ) -> float:
         """Computes current epoch learning rate based on selected schedule type"""
-        #Single warmup check
+        
         if epoch <= warmup_epochs:
             return initial_lr * (epoch/float(warmup_epochs))
         
@@ -692,41 +691,39 @@ class DeepLearningPhysicsSimulator:
         seed: int = 42        
     ) -> Dict[str, float]:
         """Simulates epoch convergence physics utilizing complex stochastic random walks"""
-        #Fix seed dynamically mapped per epoch to gurantee
+      
         np.random.seed(seed+epoch)
         random.seed(seed+epoch)
 
         progress = epoch / float(total_epochs)
 
-        #Hyperparameters impacts
+     
         scale_dampening = 1.0 + (backbone_scale - 1.0)* 0.15
         batch_dampening = 1.0 - (batch_multiplier - 1.0)*0.05
 
-        #Cosine/Exponential Decay models
+      
         base_decay= math.exp(-3.5*progress)
         noise_variance= 0.06 * math.exp(-2.0*progress)
 
-        #Box loss model
         box_base=1.8*base_decay+0.3
         box_noise = np.random.normal(0, noise_variance *0.8)
         box_loss = max(0.15, (box_base+box_noise)*scale_dampening*batch_dampening)
 
-        #Class Loss Model
+       
         class_base= 2.2 * math.exp(-4.2 * progress) + 0.15
         class_noise = np.random.normal(0, noise_variance *0.8)
         class_loss= max(0.08, (class_base+class_noise)*scale_dampening)
 
-        #Distribution Focal Loss
+      
         dfl_base = 1.2*math.exp(-2.8*progress)+0.4
         dfl_noise = np.random.normal(0, noise_variance * 0.5)
         dfl_loss = max(0.2, (dfl_base + dfl_noise)*batch_dampening)
 
         total_loss = box_loss + class_loss + dfl_loss
 
-        #Precision & Recall
+    
         map_noise = np.random.normal(0,0.015*math.exp(-1.5*progress))
 
-        #Sigmoid curve matching convergence
         sigmoid_prog = 1.0/(1.0+math.exp(-7.0 * (progress - 0.25)))
 
         precision = min(0.98, max(0.1, 0.12+0.83 * sigmoid_prog+map_noise))
@@ -754,7 +751,7 @@ class DeepLearningPhysicsSimulator:
             "lr": float(current_lr)
         }
 
-#SECTION 7: HYPERPARAMETER TUNING
+#parametere tuining
 
 class HyperparameterSweeper:
     """Manages AutoML dashboard"""
@@ -764,17 +761,17 @@ class HyperparameterSweeper:
         """Simulates configuration and final metric score for once run of an AutoML grid search"""
         random.seed(seed+ run_id)
 
-        #Random Pick Hyperparameters
+        
         lr = round(10**random.uniform(-4,-1.5),5)
         batch= random.choice([8,16,32,64])
         optimizer = random.choice(["AdamW","SGD","RMSprop"])
         weight_decay = round(10**random.uniform(-5,-2.5), 6)
         iou_threshold = round(random.uniform(0.45,0.7), 2)
 
-        #Compute scoring metrics
+       
         base_score = 0.55
 
-        #Scale model impact
+        
         backbone_scale = 1.0
         if "yolov8s" in backbone:
             base_score += 0.06
@@ -785,7 +782,7 @@ class HyperparameterSweeper:
         elif "yolob8x" in backbone:
             base_score += 0.22
 
-        # LR tuning checks
+       
         if 0.0001 <= lr <= 0.015:
             base_score += 0.10
         elif lr > 0.05:
@@ -795,7 +792,7 @@ class HyperparameterSweeper:
         if optimizer == "AdamW":
             base_score += 0.05
 
-        # Match Weight decay bounds
+      
         if 0.0001 <= weight_decay <= 0.001:
             base_score += 0.04
 
@@ -819,7 +816,7 @@ class HyperparameterSweeper:
         }
     
 
-#WEIGHTS VAULT & MODEL EXPORTER INTERFACE
+
 
 class WeightsVaultExporter:
     """Manages weights storage mapping, CSV report summaries, and memory compilation zip generation."""
@@ -900,7 +897,7 @@ class WeightsVaultExporter:
             }
         return {}
     
-#ADVANCED NEURAL MATH PLAYGROUND & PURE PYTHON ALGORITHMS
+#math playground
 
 class NeuralMathPlayground:
     """Implements educational, fully operational pure-Python math algorithms for ML tasks"""
@@ -1030,7 +1027,7 @@ class NeuralMathPlayground:
         precision= np.maximum.accumulate(precision[::-1])[::-1]
         return list(recalls), list(precision)
         
-#SECTION 10: OPTIMIZER SPECIFIC
+#optimizer check
 class OptimizerTheoryMatrix:
    """Houses mathematical parameters, description, and learning dynamics for deep learning optimizers"""
 
@@ -1115,7 +1112,7 @@ DETAILS = {
 }
 OptimizerTheoryMatrix.DETAILS = DETAILS
 
-#Image Authenticator
+
 class ImageAugmentationSimulator:
     """Applies simulated pixel operations and geometric transforms to mock images."""
     
@@ -1161,7 +1158,7 @@ class ImageAugmentationSimulator:
         return np.clip(adjusted,0,255).astype(np.uint8)
     
 
-#Deployment script generator
+
 
 class DeploymentScriptGenerator:
     """Compiles clean operational code templates for deployment servers,fastapis, and dockers"""
@@ -1656,7 +1653,7 @@ def main():
     #1. Setup Streamlit page definitions
     st.set_page_config(
         page_title="Deep Learing Lab Workspace",
-        page_icon="🧠",
+        page_icon="",
         layout="wide",
         initial_sidebar_state="expanded"
     )
@@ -2720,7 +2717,7 @@ elif st.session_state.stage == 5:
                 sgd_mom = st.slider("Momentum Dampening (gamma)", 0.0, 0.99, 0.9, step=0.05)
                 sgd_wd = st.slider("Decoupled L2 Weight Decay (lambda)", 0.0, 0.01, 0.0005, step=0.0005, format="%.5f")
                 
-                if st.button("⚡ EXECUTE SINGLE GRADIENT OPTIMIZATION STEP"):
+                if st.button(" EXECUTE SINGLE GRADIENT OPTIMIZATION STEP"):
                     np.random.seed(random.randint(1, 1000))
                     dummy_gradients = np.random.normal(0, 0.05, (16, 16))
                     
